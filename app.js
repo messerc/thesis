@@ -2,22 +2,24 @@ const apm = require('elastic-apm-node').start({
   appName: 'thesis'
 });
 const express = require('express');
+const moment = require('moment');
 const { Events } = require('./db/events.js');
 
 const app = express();
 
 app.post('/events', (req, res) => {
-  const readTest = (n) => {
-    if (n === 0) {
-      console.log('all done');
-      res.end();
-    }
-    Events.findOne()
-    .then(() => {
-      readTest(n-1)
-    })
+  const events = [];
+  for (let i = 0; i < 1000; i++) {
+    events.push(new Events({
+      createdAt: moment('2016-01-01'),
+      eventType: 'view',
+      userId: 'Test',
+      listingId: 'Test'
+    }));
   }
-  readTest(10000)
+  Events.insertMany(events).then(events => {
+    res.send('finished writing 1000 records');
+  }); 
 });
 
 app.use(apm.middleware.express());
