@@ -28,21 +28,14 @@ const poll = Consumer.create({
 poll.start(); 
 
 app.post("/events", (req, res) => {
-  console.log('a new batch of messages in da queue');
-  console.log(JSON.parse(req.body.Body));
-  const events = [];
-  for (let i = 0; i < 1000; i++) {
+  const events = []; 
+  JSON.parse(req.body.Body).forEach(msg => {
     events.push(
-      new Events({
-        createdAt: moment("2016-01-01"),
-        eventType: "view",
-        userId: "Test",
-        listingId: "Test"
-      })
+      new Events(Object.assign({}, msg))
     );
-  }
+  });
   Events.insertMany(events).then(events => {
-    res.send("finished writing 1000 records");
+    res.send("finished writing 100 records");
   });
 });
 
