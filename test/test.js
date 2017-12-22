@@ -47,4 +47,13 @@ describe("Events DB", function() {
       });
     });
   });
+  describe("GET events", function() {
+    it("should retrieve an event from the DB", function() {
+      axios.get('http://localhost:3000/events')
+      .then(value => {
+        expect.value.to.be(true); 
+        expect.value.eventType.to.exist; 
+      })
+    });
+  });
 });

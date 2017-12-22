@@ -39,6 +39,13 @@ app.post("/events", (req, res) => {
   });
 });
 
+app.get("/events", (req, res) => {
+  Events.findOne()
+  .then(val => {
+    res.send(val); 
+  })
+});
+
 app.use(apm.middleware.express());
 
 app.listen(3000);
