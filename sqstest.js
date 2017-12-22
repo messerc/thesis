@@ -10,9 +10,7 @@ const params = {
   QueueUrl: "https://sqs.us-east-2.amazonaws.com/669306556214/events"
 };
 
-let length = 100; 
-
-while (length) {
+for (let i = 0; i < 100; i++) {
   setTimeout(() => {
     for (let i = 0; i < 10; i++) {
       let messages = [];
@@ -35,5 +33,4 @@ while (length) {
       });
     }
   }, 50);
-  length--; 
 }
